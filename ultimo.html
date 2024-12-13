@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Seleção de Jogos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #00aaff;
+      text-align: center;
+    }
+
+    h1 {
+      color: white;
+      margin-top: 20px;
+      font-size: 3em;
+      text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+      animation: animateText 2s infinite alternate;
+    }
+
+    @keyframes animateText {
+      0% {
+        transform: translateY(0);
+        text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+      }
+      50% {
+        transform: translateY(-10px);
+        text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+      }
+      100% {
+        transform: translateY(0);
+        text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    .game-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 50px;
+    }
+
+    .game {
+      width: 150px;
+      height: 150px;
+      cursor: pointer;
+      transition: transform 0.4s ease, opacity 0.3s ease;
+      position: relative;
+    }
+
+    .game img {
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .game:hover img {
+      transform: scale(1.1);
+    }
+
+    .game.selected {
+      transform: scale(1.05);
+      animation: clickEffect 0.6s forwards;
+    }
+
+    @keyframes clickEffect {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1.05);
+      }
+    }
+
+    iframe {
+      display: none;
+      width: 100vw;
+      height: 100vh;
+      border: none;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <audio autoplay loop>
+    <source src="https://www.dropbox.com/scl/fi/7e8hqi7x7s7n875cf8jkx/AudioCoffee-Band-Steps.mp3?rlkey=wb8q7g0005ys1c47h29uvs0wu&st=02wetb2i&dl=1" type="audio/mp3">
+  </audio>
+
+  <h1>@dvznnx, dão uma moral lá :)</h1>
+
+  <div class="game-container">
+    <div class="game" onclick="loadGame('subway')">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYr633KwsnhaXFGKHmIWGzOkNXGGXO78y8Aj5b1ZFho-CG4mxq7hu74Mc&s=10" alt="Subway Surfers">
+    </div>
+    <div class="game" onclick="loadGame('levelDevil')">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmsOr1jERtpCY1ffmHKlUhW7vrdhJdSvWKYVdx5vMor6tO9wCedD-P1Zo&s=10" alt="Level Devil">
+    </div>
+  </div>
+
+  <iframe id="gameFrame" src="" frameborder="0"></iframe>
+
+  <script>
+    function loadGame(game) {
+      const iframe = document.getElementById('gameFrame');
+      const games = document.querySelectorAll('.game');
+
+      // Reset selected states for all games
+      games.forEach(g => g.classList.remove('selected'));
+
+      // Apply selected state to the clicked game
+      const clickedGame = event.target.closest('.game');
+      clickedGame.classList.add('selected');
+
+      // Delay to match the animation
+      setTimeout(() => {
+        // Load the selected game in the iframe
+        if (game === 'subway') {
+          iframe.src = 'https://szhong.4399.com/4399swf//upload_swf/ftp38/liuxinyu/20220308/1/index.html';
+        } else if (game === 'levelDevil') {
+          iframe.src = 'https://bitlifeonline.github.io/level-devil/';
+        }
+
+        iframe.style.display = 'block';
+
+        // Redirect to the game after animation
+        setTimeout(() => {
+          // Make the iframe take the entire screen after the animation
+          iframe.requestFullscreen();
+        }, 500); // Adjust the timing to suit the animation
+      }, 600); // Delay for the click effect animation
+    }
+  </script>
+
+</body>
+</html>
